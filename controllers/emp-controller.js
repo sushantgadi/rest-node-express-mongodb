@@ -8,14 +8,20 @@ var emp_controller = function (Emp) {
         //create new instance of Employee model using request body 
         var emp = new Emp(req.body);
 
-        emp.save();
+        if (!req.body.emp_name) {
+            res.status(400);
+            res.send('Emp Name is required');
+        }
+        else {
+            emp.save();
 
-        console.log("--------------------------------------------------")
-        console.log("/employees post API response body:")
-        console.log(emp);
+            console.log("--------------------------------------------------")
+            console.log("/employees post API response body:")
+            console.log(emp);
 
-        res.status(201).send(emp);
-
+            res.status(201);
+            res.send(emp);
+        }
     };
 
     var get = function (req, res) {

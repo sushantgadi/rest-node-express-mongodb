@@ -9,7 +9,13 @@ var app = express();
 var port = process.env.port || 3000;
 
 //databse connection with mongoDB(Will create the database if it does not exist)
-var db = mongoose.connect('mongodb://localhost/emp-api');
+var db;
+
+if (process.env.ENV === 'Test')
+    db = mongoose.connect('mongodb://localhost/emp-api-test');
+
+else
+    db = mongoose.connect('mongodb://localhost/emp-api');
 
 //Employee model import
 var Emp = require('./models/emp-model')
@@ -21,7 +27,7 @@ app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 
 //emp router
-var empRouter = require('./routes/emp-routes')(Emp,app);
+var empRouter = require('./routes/emp-routes')(Emp, app);
 
 //emp API's default url
 app.use('/api/emp', empRouter);
