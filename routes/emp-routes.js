@@ -1,7 +1,5 @@
 var express = require('express');
 
-
-
 var routes = function (Emp) {
 
     //for defining different routes
